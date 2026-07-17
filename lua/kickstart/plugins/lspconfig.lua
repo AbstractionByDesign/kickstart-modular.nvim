@@ -104,7 +104,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ---@type table<string, vim.lsp.Config>
 local servers = {
   -- clangd = {},
-  -- gopls = {},
+   gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
   --
@@ -159,7 +159,12 @@ vim.pack.add {
 }
 
 -- Automatically install LSPs and related tools to stdpath for Neovim
-require('mason').setup {}
+require('mason').setup {
+  registries = {
+    'github:mason-org/mason-registry',
+    'github:Crashdummyy/mason-registry',
+  },
+}
 
 -- Ensure the servers and tools above are installed
 --
@@ -170,7 +175,7 @@ require('mason').setup {}
 -- You can press `g?` for help in this menu.
 local ensure_installed = vim.tbl_keys(servers or {})
 vim.list_extend(ensure_installed, {
-  -- You can add other tools here that you want Mason to install
+  'roslyn',
 })
 
 require('mason-tool-installer').setup { ensure_installed = ensure_installed }
